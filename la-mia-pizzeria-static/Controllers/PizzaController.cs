@@ -26,6 +26,13 @@ namespace la_mia_pizzeria_static.Controllers
 
             return View(pizza);
         }
+        public IActionResult Create ()
+        {
+            var pizza = new PizzaModel();
+            return View(pizza);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(PizzaModel data) { 
             if (!ModelState.IsValid)
             {
@@ -45,10 +52,6 @@ namespace la_mia_pizzeria_static.Controllers
             }
         
         
-        }
-        public IActionResult Create ()
-        {
-            return View("Create");
         }
     }
 
