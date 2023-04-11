@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using la_mia_pizzeria_static.Models;
+using Microsoft.Identity.Client;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -24,6 +25,30 @@ namespace la_mia_pizzeria_static.Controllers
             }
 
             return View(pizza);
+        }
+        public IActionResult Create(PizzaModel data) { 
+            if (!ModelState.IsValid)
+            {
+                return View("Create",data);
+            }
+            using (PizzaContext context = new PizzaContext())
+            {
+                PizzaModel pizzatoCreate = new PizzaModel();
+                pizzatoCreate.Nome = data.Nome;
+                pizzatoCreate.Descrizione = data.Descrizione;
+                pizzatoCreate.Price = data.Price;
+
+                context.Pizze.Add(pizzatoCreate);
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+        
+        
+        }
+        public IActionResult Create ()
+        {
+            return View("Create");
         }
     }
 
